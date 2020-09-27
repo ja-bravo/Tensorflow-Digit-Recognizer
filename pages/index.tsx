@@ -39,6 +39,8 @@ export default function Home() {
         }),
       );
       m.add(tf.layers.conv2d({ kernelSize: 3, filters: 32, activation: 'relu' }));
+      m.add(tf.layers.batchNormalization());
+      m.add(tf.layers.dropout({ rate: 0.25 }));
       m.add(
         tf.layers.maxPooling2d({
           poolSize: 2,
@@ -46,6 +48,7 @@ export default function Home() {
         }),
       );
       m.add(tf.layers.conv2d({ kernelSize: 3, filters: 32, activation: 'relu' }));
+      m.add(tf.layers.dropout({ rate: 0.25 }));
       m.add(tf.layers.flatten({}));
       m.add(tf.layers.dense({ units: 64, activation: 'relu' }));
       m.add(tf.layers.dense({ units: 10, activation: 'softmax' }));
@@ -67,7 +70,7 @@ export default function Home() {
     console.log(trainData);
     await modelRef.current.fit(trainData.xs, trainData.labels, {
       callbacks: tfvis.show.fitCallbacks(surface, ['loss', 'acc']),
-      epochs: 1,
+      epochs: 3,
       batchSize: 128,
       validationSplit: 0.15,
     });
