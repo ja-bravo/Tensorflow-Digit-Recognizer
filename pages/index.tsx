@@ -67,6 +67,7 @@ export default function Home() {
                   const probs = Array.from(answer.dataSync());
                   setProbs(probs.map((p, i) => ({ prob: p, index: i })));
                   setAnswer(classNames[answer.argMax(-1).dataSync()[0]]);
+                  answer.dispose();
                 }}
               />
 
